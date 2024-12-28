@@ -1,0 +1,172 @@
+Prerequisites
+Install Tableau Desktop: Ensure you have Tableau installed.
+Prepare the Data:
+Import the 5 CSV files (dim_date, dim_hotels, dim_rooms, fact_aggregated_bookings, fact_bookings) into Tableau.
+Establish relationships (joins) between tables based on common fields:
+dim_date.date → fact_aggregated_bookings.check_in_date and fact_bookings.check_in_date.
+dim_hotels.property_id → fact_aggregated_bookings.property_id and fact_bookings.property_id.
+dim_rooms.room_id → fact_aggregated_bookings.room_category and fact_bookings.room_category.
+Step-by-Step Instructions
+1. Total Revenue
+Objective: Calculate and display the total revenue generated.
+
+Create a Calculated Field:
+
+Name: Total Revenue
+Formula: SUM([revenue_realized])
+Create a Visualization:
+
+Drag the Total Revenue calculated field to the Text mark.
+Set it as a KPI by formatting it as a large, bold number.
+Design:
+
+Place this visualization on the top left of your dashboard.
+2. Occupancy
+Objective: Visualize the occupancy rate over time.
+
+Create a Calculated Field:
+
+Name: Occupancy Rate
+Formula: (SUM([successful_bookings]) / SUM([capacity])) * 100
+Create a Line Chart:
+
+Drag check_in_date to Columns.
+Drag Occupancy Rate to Rows.
+Format as a Line Chart.
+Filter Options:
+
+Add filters for property_id and room_category to allow detailed views.
+Design:
+
+Place this chart in the top center of your dashboard.
+3. Cancellation Rate
+Objective: Display the percentage of canceled bookings.
+
+Create a Calculated Field:
+
+Name: Cancellation Rate
+Formula:
+sql
+Copy code
+(COUNT(IF [booking_status] = 'Cancelled' THEN 1 END) / COUNT([booking_id])) * 100
+Create a Pie Chart or Bar Chart:
+
+Drag booking_status to Columns.
+Drag the new Cancellation Rate field to Rows.
+Format as a pie or bar chart.
+Design:
+
+Place this visualization next to "Occupancy."
+4. Total Booking
+Objective: Display the total number of successful bookings.
+
+Create a Filter:
+
+Exclude bookings with booking_status = "Cancelled".
+Create a KPI:
+
+Drag booking_id to Rows and change the aggregation to COUNT.
+Design:
+
+Add this number below "Total Revenue" as a KPI.
+5. Utilize Capacity
+Objective: Show the difference between successful bookings and capacity.
+
+Create a Bar Chart:
+
+Drag property_id to Columns.
+Drag both successful_bookings and capacity to Rows.
+Use dual-axis or stacked bars to visualize comparison.
+Filter Options:
+
+Add filters for check_in_date and room_category.
+Design:
+
+Place this chart below the "Occupancy Rate."
+6. Trend Analysis
+Objective: Analyze revenue, bookings, or occupancy trends over time.
+
+Create a Multi-Line Chart:
+
+Drag check_in_date to Columns.
+Drag SUM([revenue_realized]), COUNT([booking_id]), and Occupancy Rate to Rows.
+Format them as lines with different colors.
+Design:
+
+Add this chart as a primary visualization in the middle of your dashboard.
+7. Weekday & Weekend Revenue and Booking
+Objective: Compare revenue and bookings on weekdays vs. weekends.
+
+Filter the Data:
+
+Use the day_type column from dim_date to categorize as "Weekday" or "Weekend."
+Create a Side-by-Side Bar Chart:
+
+Drag day_type to Columns.
+Drag SUM([revenue_realized]) and COUNT([booking_id]) to Rows.
+Design:
+
+Add this chart below "Trend Analysis."
+8. Revenue by State & Hotel
+Objective: Show revenue distribution across cities and hotels.
+
+Create a Map Visualization:
+
+Drag city from dim_hotels to the Detail mark.
+Drag SUM([revenue_realized]) to the Color mark.
+Add Filters:
+
+Add filters for property_id or check_in_date.
+Design:
+
+Place this map on the right side of the dashboard.
+9. Class Wise Revenue
+Objective: Compare revenue across room classes.
+
+Create a Bar Chart:
+
+Drag room_class from dim_rooms to Columns.
+Drag SUM([revenue_realized]) to Rows.
+Design:
+
+Add this chart near the "Revenue by State & Hotel."
+10. Checked Out, Cancel, No Show
+Objective: Show booking statuses distribution.
+
+Create a Stacked Bar Chart:
+
+Drag booking_status to Columns.
+Drag COUNT([booking_id]) to Rows.
+Design:
+
+Place this chart in the lower section of the dashboard.
+11. Weekly Trend Key Metrics
+Objective: Analyze weekly revenue, bookings, and occupancy.
+
+Use week no from dim_date:
+
+Drag week no to Columns.
+Drag SUM([revenue_realized]), COUNT([booking_id]), and Occupancy Rate to Rows.
+Create a Multi-Line Chart:
+
+Format as lines, with different colors for each metric.
+Design:
+
+Add this chart at the bottom of the dashboard.
+Final Design
+Top Section: KPIs (Total Revenue, Total Booking, Cancellation Rate).
+Middle Section: Occupancy and Trend Analysis.
+Bottom Section: Weekday/Weekend Comparisons, Revenue by State & Hotel, Class Wise Revenue.
+Filters: Add filters for Date, City, Hotel, and Room Category.
+Let me know if you need further clarification or specific assistance in Tableau!
+
+
+
+
+
+
+
+
+
+
+
